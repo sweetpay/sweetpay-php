@@ -1,0 +1,2 @@
+[2016-08-01 14:47:20] setApiKey.INFO: input into directory (Controllers) and func: {setApiKey()} is not array,                                 must be a array of keys (auth,stage[true|false]), please retry [] []
+[2016-08-01 15:16:01] setApiKey.INFO: input into directory (Controllers) and func: {setApiKey()} is not array,                                 must be a array of keys (auth,stage[true|false]), please retry [] []
