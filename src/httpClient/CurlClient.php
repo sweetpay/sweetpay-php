@@ -3,13 +3,23 @@
 namespace Sweetpay\httpClient;
 
 
+use Sweetpay\Helper ;
 
 use \Exception;
 
 class CurlClient extends CurlBase
 {
 
-    private $dataset = array();
+    public static $namespaces   = __NAMESPACE__;
+    public static $classes      = __CLASS__;
+
+    //@array data of the transaction
+    private $dataset        = array();
+    //@array get the conditions from parent
+    private $condArray      = array( );
+
+
+    private $absurl         ;
 
     public function __construct(array $data)
     {
@@ -19,6 +29,13 @@ class CurlClient extends CurlBase
             $this->dataset     = $data;
         }
 
+        $this->condArray    = parent::getCondition();
+        $this->absurl       = $this->condArray['apiBase'];
+        if(empty( $this->absurl) ||  $this->absurl === "")
+        {
+            $message    = sprintf("The url dont exist (%s) please enter valid url", $this->absurl );
+            throw Exception($message);
+        }
     }
     
     
@@ -28,37 +45,46 @@ class CurlClient extends CurlBase
 ////////////////////////////////////////////////////////////////////////////
     public function request($method = null)
     {
+        $outputArray       = array( );
         $curl   = curl_init();
         $method = strtolower($method);
         $opts   = array();
 
         // conditions from Checkout and CurlBase
-        $condArray   = parent::getCondition();
 
-        $opts[CURLOPT_TIMEOUT]          = (int) $condArray["DEFAULT_TIMEOUT"];
-        $opts[CURLOPT_CONNECTTIMEOUT]   = (int) $condArray['DEFAULT_CONNECT_TIMEOUT'];
-        $opts[CURLOPT_URL]              = (string) $condArray['apiBase'];
+
+        $opts[CURLOPT_TIMEOUT]          = (int)  $this->condArray ["DEFAULT_TIMEOUT"];
+        $opts[CURLOPT_CONNECTTIMEOUT]   = (int)  $this->condArray ['DEFAULT_CONNECT_TIMEOUT'];
+        $opts[CURLOPT_URL]              = (string) Helper::setToUtf8($this->absurl) ;
         $opts[CURLOPT_RETURNTRANSFER]   = (boolean) true;
         $opts[CURLOPT_POST]             = (boolean) true;
         $opts[CURLOPT_SSL_VERIFYPEER]   = false;
         $opts[CURLOPT_HTTPHEADER]       = array(
                                             'Content-Type: application/json',
-                                            'Authorization: ' .  $condArray["apiKey"]
+                                            'Authorization: ' .   $this->condArray ["apiKey"]
         );
-        $opts[CURLOPT_POSTFIELDS] = self::encode($this->dataset, $prefix = 'json');
+
+
+        $opts[CURLOPT_POSTFIELDS] = Helper::encode($this->dataset, $prefix = 'json');
+
         curl_setopt_array($curl, $opts)  ;
 
-        $rbody = curl_exec($curl);
-        $status = curl_getinfo($curl,CURLINFO_HTTP_CODE);
+        $respones          = curl_exec($curl);
 
-        if (curl_errno($curl))
+        if( $respones === false )
         {
-            $message = json_encode(array( $status, curl_errno($curl)));
-            throw new Exception( $message );
+            $errno      = curl_errno($curl);
+            $message    = curl_error($curl);
+            curl_close($curl);
+            $this->handleCurlError($this->absurl, $errno, $message);
         }
-        curl_close($curl);
 
-        return array($rbody,$status,$opts);
+        $status         = curl_getinfo($curl,CURLINFO_HTTP_CODE);
+
+
+        curl_close($curl);
+        $outputArray    =  array('respons' => $respones, 'status' => $status, 'opts' =>$opts);
+        return count($outputArray) > 0  ? $outputArray : null;
     }
 
 
@@ -69,42 +95,37 @@ class CurlClient extends CurlBase
         return $this;
     }
 
-    public static function encode($arr, $prefix = null)
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    // functions used only in CurlClient
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    private function handleCurlError($url, $errno, $message)
     {
-        if (!is_array($arr)) {
-            return $arr;
+        switch ($errno) {
+            case CURLE_COULDNT_CONNECT:
+            case CURLE_COULDNT_RESOLVE_HOST:
+            case CURLE_OPERATION_TIMEOUTED:
+                $msg = "Could not connect to Sweetpay ($url).  Please check your "
+                    . "internet connection and try again.  If this problem persists, "
+                    . "you should check Sweetpay's support status at "
+                    . "xy, or";
+                break;
+            case CURLE_SSL_CACERT:
+            case CURLE_SSL_PEER_CERTIFICATE:
+                $msg = "Could not verifySSL certificate.  Please make sure "
+                    . "that your network is not intercepting certificates.  "
+                    . "(Try going to $url in your browser.)  "
+                    . "If this problem persists,";
+                break;
+            default:
+                $msg = "Unexpected error communicating with Sweetpay.  "
+                    . "If this problem persists,";
         }
+        $msg .= " let us know at support@sweetpay.com.";
 
-        $r = array( );
-        if( $prefix == 'json')
-        {
-            return json_encode($arr);
-        } else {
-            foreach ($arr as $k => $v) {
-                if (is_null($v)) {
-                    continue;
-                }
+        $msg .= "\n\n(Network error [errno $errno]: $message)";
 
-                if ($prefix) {
-                    if ($k !== null && (!is_int($k) || is_array($v))) {
-                        $k = $prefix . "[" . $k . "]";
-                    } else {
-                        $k = $prefix . "[]";
-                    }
-                }
-
-                if (is_array($v)) {
-                    $enc = self::encode($v, $k);
-                    if ($enc) {
-                        $r[] = $enc;
-                    }
-                } else {
-                    $r[] = urlencode($k) . "=" . urlencode($v);
-                }
-            }
-            return implode("&", $r);
-        }
-
+        throw new Exception($msg);
 
     }
 

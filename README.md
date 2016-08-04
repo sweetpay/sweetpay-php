@@ -30,7 +30,7 @@ Simple usage looks like:
 ```php
 $setup = [  "apiKey" => (string) "NNq7Rcnb8y8jGTsU",
             "stage" => (boolean) true,
-"            "DEFAULT_TIMEOUT" => (int ) 30 ];
+           "DEFAULT_TIMEOUT" => (int ) 30 ];
 $transactionData = array(   'transactions' => array(
                                 array('amount' => 100, 'currency' => 'SEK')
                     ),

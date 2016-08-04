@@ -13,6 +13,7 @@ class CheckoutCond
     protected static $input;
     public static $namespaces   = __NAMESPACE__;
     public static $classes      = __CLASS__;
+
     ////////////////////////////////////////////////////////////////////////
     // Conditions needed for this script to run
     ////////////////////////////////////////////////////////////////////////
@@ -25,31 +26,28 @@ class CheckoutCond
 
 
 
-    private $checkOption                     = array('apiKey' => 'string',
-                                                    'stage' => 'boolean',
-                                                    'apiBase' => 'string');
+    private $checkOption                     = array('apiKey'   => 'string',
+                                                    'stage'     => 'boolean',
+                                                    'apiBase'   => 'string');
 
 
     // when new is called then run this
     public function __construct()
-    {
-        $this->setConditions( );
-
+    { // run the internal function when instantating and checking the option array
+        $this->setCheckOutConditions( );
     }
 
-    /** @abstract set the cond from the <merchant script>
-     * @param {string|character} the key
-     * @throws  \Controllers\CheckoutCond::setCheckOut(<ARRAY OF CONDITIONS>)
+    /**
+     * @param $arg an array of setting that will be used to create the transaction/subscription
+     * @throws Exception
+     * @return a static array that will be used all around the sdk
      */
     public static function setCondition($arg)
     {
-        $args = func_get_args();
-        if( is_string($arg) & empty($arg) ) {
-            $message = sprintf("input into directory (%s) and func: {%s()} is not array,
-                                must be a array of keys (auth,stage[true|false]), please retry",
-                self::$namespaces, __FUNCTION__);
-            $log = new MyLoggers();
-            $log->setLog($message = $message, $func = __FUNCTION__, $path = self::$classes);
+        $args       = func_get_args();
+        if( is_string($arg) || empty($arg) || count($args) == 0) {
+            $message = "Error using function " .  __FUNCTION__ . "() ";
+            $message .= "must be an array, currently its empty or string, please retry";
             throw new Exception ($message);
 
         }
@@ -92,7 +90,7 @@ class CheckoutCond
      * @throws
      *
      */
-    protected function setConditions( )
+    protected function setCheckOutConditions( )
     {
         if(!empty(self::$input))
         {
@@ -111,10 +109,15 @@ class CheckoutCond
 
             }
 
+        } else {
+            $message = "Error using function " .  __FUNCTION__ . "() ";
+            $message .= "the internal array set by setCondition() is empty";
+            throw new Exception ($message);
         }
 
 
     } // end of setConditions()
+
 
 
 

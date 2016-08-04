@@ -19,11 +19,11 @@
     ],
  "minimum-stability": "dev",
   "require": {
-    "php": ">=5.4"
+    "php": ">=5.4",
+    "monolog/monolog": "1.*"
   },
   "require-dev": {
-    "phpmailer/phpmailer": "~5.2",
-    "monolog/monolog": "1.*"
+    "phpmailer/phpmailer": "~5.2"
   },
   "autoload": {
     "psr-4": { "Sweetpay\\" : "src/" }
