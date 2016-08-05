@@ -12,6 +12,13 @@ You can install the bindings via [Composer](http://getcomposer.org/). Run the fo
 composer require sweetpay/sweetpay-php dev-master
 ```
 
+go to to the sweetpay-php directory and run:
+
+```bash
+composer install
+```
+this will create a vendor directory inside the src directory.
+
 To use the bindings, use Composer's [autoload](https://getcomposer.org/doc/00-intro.md#autoloading):
 
 ```php
