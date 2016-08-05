@@ -3,7 +3,7 @@ namespace Sweetpay;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
-
+use Sweetpay\Helper;
 
 class MyLoggers
 {
@@ -28,19 +28,18 @@ class MyLoggers
      *@example $log = new MyLoggers( );
      *$log->setLog($message = $message, $func = __FUNCTION__, $name =  );
      */
-    public function setLog($message, $func, $name = null)
+    public function setLog($arg, $func, $name = null)
     {
         if( ! is_null($name) )
         { // if is defined
-            $name1  =  \Sweetpay\Helper::getClassName($name);
+            $name1  =  Helper::getClassName($name);
         } else {
             $name1   = 'error';
         }
 
-        $path   =  $this->classes;
         $logger = new Logger($func);
         $logger->pushHandler(new StreamHandler($this->path . "/{$name1}.log", Logger::DEBUG));
-        return $logger->addInfo($message);
+        return $logger->addInfo(json_encode($arg));
     }
     
   

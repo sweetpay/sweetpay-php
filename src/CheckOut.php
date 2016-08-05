@@ -8,13 +8,14 @@
 
 namespace Sweetpay;
 
-
+use Sweetpay\Helper;
 use Sweetpay\httpClient\CurlClient AS Curl;
 
 class CheckOut
 {
 
     private $dataset        = array();
+    protected $output       = array( );
     protected $respons      ;
     private $what ;
 
@@ -23,13 +24,16 @@ class CheckOut
 
         if( count($data) > 0 & ! empty($data))
         {
-            $this->what     = $this->getKeys($data);
+            $this->what         = $this->getKeys($data);
 
-            $this->dataset  = \Sweetpay\Helper::setConditionArray($data, $this->what);
+            $this->dataset      = Helper::setConditionArray($data, $this->what);
         }
         $curl                   =  new Curl($this->dataset);
+        // get the response
+        $this->respons          = $curl->request( );
+        $this->output           = Helper::setResponsArray($this->respons);
 
-        $this->respons          = $curl->request();
+
     }
 
     public function __destruct()
@@ -41,17 +45,17 @@ class CheckOut
     /**
      * @return array|null
      */
-    public function getRespons()
+    public function getOutput()
     {
 
-        if(is_null( $this->respons ) )
+        if(is_null( $this->output ) & empty($this->output) )
         {
             $message = "Error using function " .  __FUNCTION__ . "() ";
             $message .= "respons is null, please check input again";
             throw new Exception ($message);
         }
 
-        return $this->respons;
+        return $this->output;
     }
 
     /**

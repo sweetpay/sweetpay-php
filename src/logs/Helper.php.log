@@ -1,1 +1,0 @@
-[2016-08-04 16:32:21] errorMessage.INFO:  Caught error: (CheckOutTransaction.php, line 71): Invalid argument supplied for foreach() in file [Helper.php] on line (135) [] []

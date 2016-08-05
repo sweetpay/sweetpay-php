@@ -100,6 +100,7 @@ class Helper
      * @param $arg the Exception $e variable
      * @return echo:s the error message
      * @internal MyLoggers.php
+     *
      */
     public static function errorMessage($arg, array $input)
     {
@@ -109,8 +110,9 @@ class Helper
         $errorFile      = isset($input['path']) ? basename($input['path']) : '';
         $message = "\nCaught error: ($errorFile, line $errorLine): " . $arg->getMessage() ;
         $message .= " in file [" . $filename . "] on line (" .  $arg->getLine() . ")";
+        $output     = array('message' => $message, 'output' => $input);
         $log        = new MyLoggers();
-        $log->setLog($message = $message, $func = __FUNCTION__, $name = $filename );
+        $log->setLog($arg = $output, $func = __FUNCTION__, $name = $filename );
         echo $message;
     }
 
@@ -168,6 +170,32 @@ class Helper
 
         return $arg;
     }// end of function
+
+
+    public static function setResponsArray($arg)
+    {
+        if(is_array($arg))
+        {
+            $step1  = json_decode( $arg['respons'], $assoc = (bool) true) ;
+            $date   = date("Y-m-d H:i:s", strtotime( $step1['createdAt'])) ;
+            foreach ($step1 AS $key => &$value)
+            {
+                if(preg_match('/createdat/i', $key))
+                { // update the date
+                    $value  = $date;
+                }
+            } // end of foreach
+
+        } else {
+            $message    = "Input into ". __FUNCTION__ . " is not a array";
+            $message    .= " please view the input again";
+            throw Exception($message);
+        }
+        return array('respons' => $step1, 'options' => $arg['inputOpts']);
+    }
+
+
+
 
 
     public static function validDate($arg)

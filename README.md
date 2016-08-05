@@ -1,8 +1,9 @@
-# SweetPay PHP 
+# SweetPay PHP bindings
 
-[![Latest Stable Version](https://packagist.org/packages/sweetpay/sweetpay-php)
-
-
+[![Latest Stable Version](https://poser.pugx.org/sweetpay/sweetpay-php/v/stable)](https://packagist.org/packages/sweetpay/sweetpay-php)
+[![Total Downloads](https://poser.pugx.org/sweetpay/sweetpay-php/downloads)](https://packagist.org/packages/sweetpay/sweetpay-php)
+[![Latest Unstable Version](https://poser.pugx.org/sweetpay/sweetpay-php/v/unstable)](https://packagist.org/packages/sweetpay/sweetpay-php)
+[![License](https://poser.pugx.org/sweetpay/sweetpay-php/license)](https://packagist.org/packages/sweetpay/sweetpay-php)
 ## Composer
 
 You can install the bindings via [Composer](http://getcomposer.org/). Run the following command:

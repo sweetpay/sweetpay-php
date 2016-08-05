@@ -10,10 +10,10 @@
     // Top directory
 	$SweetPay	= realpath(__DIR__ . 'Index.php/');
 
-
+    // loads the vendor classes
 	require '../src/vendor/autoload.php';
 
-
+    /*Needed for loading the classes inside src*/
 	function autoload($className)
 	{
 		$className = ltrim($className, '\\');
@@ -40,9 +40,9 @@
                 "DEFAULT_TIMEOUT"   => (int ) 30 ];
 
     $transactionData = array(
-            'subscriptions' => array(
-                    array('amount' => '100', 'currency' => 'SEK','startsAt' => '2016-01-01', 'interval' =>' MONTHLY')  ,
-                    array('amount' => '200', 'currency' => 'SEK','startsAt' => '2016-01-01', 'interval' =>' MONTHLY')
+            'transactons' => array(
+                    array('amount' => '100', 'currency' => 'SEK')  ,
+                    array('amount' => '200', 'currency' => 'SEK')
             ),
             'country' => 'SE',
             'merchantId' => 'paylevo');
@@ -56,20 +56,25 @@
 		\Sweetpay\CheckoutCond::setCondition($setup);
 
 	} catch (Exception $e) {
-	    $input  = array('line' => __LINE__,
-                        'path' => __FILE__);
+	    $input  = array('line'  => __LINE__,
+                        'path'  => __FILE__,
+                        'input' => $setup);
         \Sweetpay\Helper::errorMessage($e, $input);
         var_dump(\Sweetpay\CheckoutCond::getApiKey());
 
     }
 
     try {
-        $Check = new \Sweetpay\CheckOut($transactionData);
-         var_dump($Check->getRespons())                  ;
+        $Check  = new \Sweetpay\CheckOut($transactionData);
+        $vars   = $Check->getOutput()                ;
+
+
+        var_dump($vars);
 
     } catch (Exception $e) {
-        $input  = array('line' => __LINE__,
-                        'path' => __FILE__);
+        $input  = array('line'  => __LINE__,
+                        'path'  => __FILE__,
+                        'input' => $transactionData);
         \Sweetpay\Helper::errorMessage($e, $input);
 
     }

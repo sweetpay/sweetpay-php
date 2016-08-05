@@ -83,7 +83,7 @@ class CurlClient extends CurlBase
 
 
         curl_close($curl);
-        $outputArray    =  array('respons' => $respones, 'status' => $status, 'opts' =>$opts);
+        $outputArray    =  array('respons' => $respones, 'status' => $status, 'inputOpts' =>$opts);
         return count($outputArray) > 0  ? $outputArray : null;
     }
 
