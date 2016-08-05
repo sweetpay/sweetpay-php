@@ -7,11 +7,6 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Test/CheckOutTransaction.php" afterPath="$PROJECT_DIR$/Test/CheckOutTransaction.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/CheckOut.php" afterPath="$PROJECT_DIR$/src/CheckOut.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Helper.php" afterPath="$PROJECT_DIR$/src/Helper.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/MyLoggers.php" afterPath="$PROJECT_DIR$/src/MyLoggers.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/httpClient/CurlClient.php" afterPath="$PROJECT_DIR$/src/httpClient/CurlClient.php" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/logs/Helper.php.log" afterPath="$PROJECT_DIR$/src/logs/Helper.php.log" />
     </list>
     <ignored path="sweetpay-php-master.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -35,8 +30,8 @@
       <file leaf-file-name="CheckOutTransaction.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Test/CheckOutTransaction.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="128">
-              <caret line="42" column="21" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
+            <state relative-caret-position="68">
+              <caret line="53" column="4" selection-start-line="53" selection-start-column="4" selection-end-line="75" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -58,8 +53,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="0">
-                <caret line="0" column="23" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+              <first_editor relative-caret-position="1590">
+                <caret line="106" column="20" selection-start-line="106" selection-start-column="20" selection-end-line="106" selection-end-column="20" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -122,9 +117,9 @@
         <option value="$PROJECT_DIR$/Test/CheckOutSubscription.php" />
         <option value="$PROJECT_DIR$/src/httpClient/CurlClient.php" />
         <option value="$PROJECT_DIR$/src/CheckOut.php" />
-        <option value="$PROJECT_DIR$/Test/CheckOutTransaction.php" />
         <option value="$PROJECT_DIR$/src/Helper.php" />
         <option value="$PROJECT_DIR$/src/MyLoggers.php" />
+        <option value="$PROJECT_DIR$/Test/CheckOutTransaction.php" />
         <option value="$PROJECT_DIR$/README.md" />
       </list>
     </option>
@@ -138,7 +133,7 @@
   <component name="PhpWebServerValidation" path_to_validation_script="$PROJECT_DIR$" selected_validation_type="LOCAL" web_path_to_validation_script="http://localhost/~AkinoOsx/sweetpay-php-master" />
   <component name="PhpWorkspaceProjectConfiguration" backward_compatibility_performed="true" />
   <component name="ProjectFrameBounds">
-    <option name="x" value="256" />
+    <option name="x" value="8" />
     <option name="y" value="23" />
     <option name="width" value="1280" />
     <option name="height" value="687" />
@@ -289,15 +284,15 @@
       <workItem from="1470296219625" duration="3859000" />
       <workItem from="1470301531347" duration="7283000" />
       <workItem from="1470317364671" duration="3627000" />
-      <workItem from="1470381468972" duration="4393000" />
+      <workItem from="1470381468972" duration="5603000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31060000" />
+    <option name="totallyTimeSpent" value="32270000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="256" y="23" width="1280" height="687" extended-state="0" />
+    <frame x="8" y="23" width="1280" height="687" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26655897" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -554,14 +549,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Test/CheckOutTransaction.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="128">
-          <caret line="42" column="21" selection-start-line="42" selection-start-column="21" selection-end-line="42" selection-end-column="21" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/MyLoggers.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="225">
@@ -582,11 +569,19 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Test/CheckOutTransaction.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="53" column="4" selection-start-line="53" selection-start-column="4" selection-end-line="75" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="0">
-            <caret line="0" column="23" selection-start-line="0" selection-start-column="23" selection-end-line="0" selection-end-column="23" />
+          <first_editor relative-caret-position="1590">
+            <caret line="106" column="20" selection-start-line="106" selection-start-column="20" selection-end-line="106" selection-end-column="20" />
             <folding />
           </first_editor>
           <second_editor />

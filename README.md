@@ -19,7 +19,7 @@ require_once('pathto/vendor/autoload.php');
 ```
 Also recommended it to use the spl autoloader.
 
-```
+```php
    /*Needed for loading the classes inside src*/
 	function autoload($className)
 	{
@@ -43,18 +43,22 @@ Also recommended it to use the spl autoloader.
 PHP 5.4 and later.
 
 ## Getting started
-Set permission for src/logs directory as 777 or
+Set permission for src/logs directory as 777, using the terminal:
 ```bash
     sudo chmod 777 logs
 ```
+in this file all the debug information will be added using monolog/monolog. 
 
 ## Set up conditions 
 ```php
-    $setup = [  "apiKey"            => (string) "NNq7Rcnb8y8jGTsU",
-                "stage"             => (boolean) true,
-                "DEFAULT_TIMEOUT"   => (int ) 30 ];
+    
+    // The intital setup, some curl setup can be changed in this array
+    $setup = array( "apiKey"            => (string) "NNq7Rcnb8y8jGTsU",
+                    "stage"             => (boolean) true,
+                    "DEFAULT_TIMEOUT"   => (int ) 30 );
 
 	try {
+	    // run the setup
 		\Sweetpay\CheckoutCond::setCondition($setup);
 
 	} catch (Exception $e) {
@@ -62,35 +66,42 @@ Set permission for src/logs directory as 777 or
                         'path'  => __FILE__,
                         'input' => $setup);
         \Sweetpay\Helper::errorMessage($e, $input);
+        // if any error, check stdout for any error message and logs/*
         var_dump(\Sweetpay\CheckoutCond::getApiKey());
 
-    }
+    } // end of try
+    
 ```
 
 
 
-
-Simple usage looks like:
+## Run a transaction
 
 
 ```php
-$setup = [  "apiKey" => (string) "NNq7Rcnb8y8jGTsU",
-            "stage" => (boolean) true,
-           "DEFAULT_TIMEOUT" => (int ) 30 ];
-$transactionData = array(   'transactions' => array(
-                                array('amount' => 100, 'currency' => 'SEK')
-                    ),
+    $transactionData = array(
+                'transactons' => array(
+                    array('amount' => '100', 'currency' => 'SEK')  ,
+                    array('amount' => '200', 'currency' => 'SEK')
+                ),
                 'country' => 'SE',
                 'merchantId' => 'paylevo');
-
-try {
-        Sweetpay\CheckoutCond::setCondition($setup);
-        ## Check that options are in
-        var_dump(Sweetpay\CheckoutCond::getApiKey());
-
-    } catch (Exception $e) {
-        echo 'Caught exception: ',  $e->getMessage(), PHP_EOL;
-}
+    
+        try {
+            $Check  = new \Sweetpay\CheckOut($transactionData);
+            $vars   = $Check->getOutput()                ;
+    
+            // check the respons,
+            var_dump($vars);
+    
+        } catch (Exception $e) {
+            $input  = array('line'  => __LINE__,
+                            'path'  => __FILE__,
+                            'input' => $transactionData);
+            \Sweetpay\Helper::errorMessage($e, $input);
+    
+        }
 
 ```
-
+For a concreate and working exempel for both transactions and subscription 
+see Test/* directory

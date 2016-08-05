@@ -31,28 +31,13 @@
 	spl_autoload_register('autoload');
 
 
-
-
-
-
-	$setup = [  "apiKey"            => (string) "NNq7Rcnb8y8jGTsU",
-			    "stage"             => (boolean) true,
-                "DEFAULT_TIMEOUT"   => (int ) 30 ];
-
-    $transactionData = array(
-            'transactons' => array(
-                    array('amount' => '100', 'currency' => 'SEK')  ,
-                    array('amount' => '200', 'currency' => 'SEK')
-            ),
-            'country' => 'SE',
-            'merchantId' => 'paylevo');
-
-
-
-
-
+    // The intital setup, some curl setup can be changed in this array
+    $setup = array( "apiKey"            => (string) "NNq7Rcnb8y8jGTsU",
+                    "stage"             => (boolean) true,
+                    "DEFAULT_TIMEOUT"   => (int ) 30 );
 
 	try {
+	    // run the setup
 		\Sweetpay\CheckoutCond::setCondition($setup);
 
 	} catch (Exception $e) {
@@ -60,15 +45,25 @@
                         'path'  => __FILE__,
                         'input' => $setup);
         \Sweetpay\Helper::errorMessage($e, $input);
+        // if any error, check stdout for any error message and logs/*
         var_dump(\Sweetpay\CheckoutCond::getApiKey());
 
-    }
+    } // end of try
+
+
+    $transactionData = array(
+            'transactons' => array(
+                array('amount' => '100', 'currency' => 'SEK')  ,
+                array('amount' => '200', 'currency' => 'SEK')
+            ),
+            'country' => 'SE',
+            'merchantId' => 'paylevo');
 
     try {
         $Check  = new \Sweetpay\CheckOut($transactionData);
         $vars   = $Check->getOutput()                ;
 
-
+        // check the respons,
         var_dump($vars);
 
     } catch (Exception $e) {
