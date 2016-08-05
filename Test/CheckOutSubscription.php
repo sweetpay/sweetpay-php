@@ -67,7 +67,7 @@
 
     try {
         $Check = new \Sweetpay\CheckOut($transactionData);
-        var_dump($Check->getRespons())                  ;
+        var_dump($Check->getOutput())                  ;
 
     } catch (Exception $e) {
         $input  = array('line' => __LINE__,

@@ -52,7 +52,7 @@
 
 
     $transactionData = array(
-            'transactons' => array(
+            'transactions' => array(
                 array('amount' => '100', 'currency' => 'SEK')  ,
                 array('amount' => '200', 'currency' => 'SEK')
             ),
